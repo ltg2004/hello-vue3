@@ -1,12 +1,38 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <el-form ref="form" :model="form" label-width="120px">
+      <ElInput
+        v-model="userId"
+        class="base-input"
+        placeholder="아이디를 입력해주세요."
+        autosize
+      />
+
+      <ElInput
+        v-if="password !== undefined"
+        v-model="password"
+        class="base-input"
+        placeholder="비밀번호를 입력해주세요."
+        autosize
+        autocomplete="off"
+        show-password
+      />
+      <ElInput
+        v-if="authNumber !== undefined"
+        v-model="authNumber"
+        class="base-input"
+        placeholder="인증번호를 입력해주세요."
+        autosize
+      />
+    </el-form>
+    <p>{{ userId }}</p>
     <div>
       <b>REFS :{{ readerNumber }}</b>
       <button @click="readerNumber = 'thank'">변경</button>
       <br />
       <b>ComputedRefs :{{ computedReaderNumber }}</b> <br />
-      <div :style="boxStyle">
+      <div class="boxStyle">
         find Data: <input v-model="searchText" /><br />
         <div v-show="listMatchingSearchQuery.length > 0">
           <p v-for="(item, i) in listMatchingSearchQuery" :key="i">
@@ -17,7 +43,7 @@
           검색된 값이 없습니다.
         </p>
       </div>
-      <div :style="boxStyle">
+      <div class="boxStyle">
         <p v-for="(item, i) in userLists" :key="i">
           {{ item.no }} / {{ item.title }}
         </p>
@@ -101,16 +127,6 @@ export default {
   props: {
     msg: String,
   },
-  data() {
-    return {
-      boxStyle: {
-        border: "1px solid #000",
-        padding: "15px",
-        maxWidth: "300px",
-        margin: "10px auto",
-      },
-    };
-  },
   setup(props) {
     const { proxy } = getCurrentInstance();
     const apiData = proxy.$api;
@@ -130,7 +146,11 @@ export default {
       userLists,
       searchText
     );
-
+    const isWhiteIp = true;
+    const form = {};
+    if (isWhiteIp) {
+      form.password;
+    }
     return {
       readerNumber,
       computedReaderNumber,
@@ -139,6 +159,11 @@ export default {
       searchText,
       userLists,
       listMatchingSearchQuery,
+      isWhiteIp,
+      form,
+      userId: ref(""),
+      password: ref(isWhiteIp ? "" : undefined),
+      authNumber: ref(!isWhiteIp ? "" : undefined),
     };
   },
   // mounted() {
@@ -162,5 +187,15 @@ li {
 }
 a {
   color: #42b983;
+}
+.boxStyle {
+  border: 1px solid #000;
+  padding: 15px;
+  max-width: 300px;
+  margin: 10px auto;
+}
+.base-input {
+  margin: 10px;
+  max-width: 300px;
 }
 </style>

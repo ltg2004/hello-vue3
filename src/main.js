@@ -16,6 +16,8 @@ import {
   ElSubmenu,
   ElTable,
   ElTableColumn,
+  ElForm,
+  ElInput,
 } from "element-plus";
 
 import "element-plus/lib/theme-chalk/index.css";
@@ -32,6 +34,8 @@ const components = [
   ElSubmenu,
   ElTable,
   ElTableColumn,
+  ElForm,
+  ElInput,
 ];
 const app = createApp(App);
 
